@@ -13,7 +13,7 @@ export class EmployeeListComponent implements OnInit {
   constructor(private employeeService: EmployeeService) {}
 
   ngOnInit() {
-    this.employeeService.getAll().subscribe(data => {
+    this.employeeService.getAllEmployeesYoungerThanAttribute('25').subscribe(data => {
       this.employees = data.employees;
     });
   }

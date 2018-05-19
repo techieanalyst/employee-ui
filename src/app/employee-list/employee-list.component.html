@@ -1,10 +1,25 @@
+<div class="form-group">
+    <label for="file">Choose File</label>
+    <input type="file"
+           id="file"
+           (change)="handleFileInput($event.target.files)">
+</div>
+
+
+  <button type="button" md-button (click)="imgFileInput.click()">Add a photo</button>
+  <input hidden type="file" #imgFileInput (change)="previewImage($event)"/>
+
+<button mat-raised-button>Click me!</button>
+
 <mat-list>
    <mat-list-item class="card-1" *ngFor="let employee of employees">
       <mat-icon matListIcon>face</mat-icon>
-      <h4 matLine>{{employee.name}}</h4>
+      <h2 matLine>{{employee.name}}</h2>
+      <h4 matLine>Company: {{employee.company}}. Join date: {{employee.joindate}}. Salary: {{employee.salary}}</h4>
       <p matLine> {{employee.age}} years old.</p>
-      <p matLine>Joined the company {{employee.company}} on {{employee.joindate}}</p>
       <p matLine>Phone: {{employee.phone}}. Email: {{employee.email}}</p>
-      <p matLine>Earning: {{employee.salary}}</p>
+	  <p matLine *ngIf="employee.address">Street: {{employee.address.street}}</p>
+	  <p matLine *ngIf="employee.address">City: {{employee.address.city}}</p>
+	  <p matLine *ngIf="employee.address">zipcode: {{employee.address.zipcode}}</p>      	
    </mat-list-item>
 </mat-list>
