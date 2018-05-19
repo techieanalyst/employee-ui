@@ -2,18 +2,21 @@
 
 <div class="example-container">
   <div>
-	  <mat-form-field (input)="filter($event.target.value)">
-	    <input matInput placeholder="Employees less than given age">
+	  <mat-form-field>
+	    <input #age matInput placeholder="Employees less than given age">
 	  </mat-form-field>
+	  <button mat-button (click)="filter(age.value)">Filter</button>
   </div>
   <div>
-	  <mat-form-field (input)="sort($event.target.value)">
-	    <input matInput placeholder="All employees sort by">
+	  <mat-form-field>
+	    <input #attribute matInput placeholder="All employees sort by">
 	  </mat-form-field>
+	  <button mat-button (click)="sort(attribute.value)">Sort</button>
   </div>
 
   <button mat-button (click)="inputFile.click()">Upload File</button>
 </div>
+
 
 <mat-card *ngIf="alert">{{alert}}</mat-card>
 

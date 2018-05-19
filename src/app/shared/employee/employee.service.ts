@@ -9,9 +9,18 @@ export class EmployeeService {
   public GET_YOUNGER_THAN = '/employees/younger/than';
   public GET_SORTED_BY = '/employees/sorted';
   public BULK_UPLOAD = '/employees/bulkupload';
+  public GET_ALL = '/employees';
 
 
   constructor(private http: HttpClient) {
+  }
+
+  getAll(): Observable<any> {
+    return this.http.get(this.API + this.GET_ALL, {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json').append('Accept', 'application/json'),
+      responseType: 'json'
+    });
   }
 
   getAllEmployeesYoungerThanAttribute(attribute: string): Observable<any> {

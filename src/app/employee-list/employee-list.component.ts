@@ -12,11 +12,13 @@ export class EmployeeListComponent implements OnInit {
   employees: Array<any>;
   fileToUpload: File = null;
   alert: any;
+  public CONNECTION_UNAVAILABLE = 'unable to connect to the service. please try again later';
+  options: Array<string> = ['filter', 'sort'];
 
   constructor(private employeeService: EmployeeService) {}
 
   ngOnInit() {
-
+    this.getAll();
   }
 
   upload(files: FileList) {
@@ -26,7 +28,7 @@ export class EmployeeListComponent implements OnInit {
       this.alert = null;
     }, (error: HttpErrorResponse) => {
       if (error.status === 0) {
-        this.alert = 'unable to connect to the service. please try again later';
+        this.alert = this.CONNECTION_UNAVAILABLE;
       } else {
         this.alert = error.error.errors;
       }
@@ -34,23 +36,47 @@ export class EmployeeListComponent implements OnInit {
   }
 
   sort(attribute: string) {
-    this.employeeService.sortAllEmployeesByAttribute(attribute).subscribe(data => {
-      this.employees = data.employees;
-      this.alert = null;
-      if (this.employees.length === 0) {
-        this.alert = 'No entries found!';
-      }
-    }, (error: HttpErrorResponse) => {
-      if (error.status === 0) {
-        this.alert = 'unable to connect to the service. please try again later';
-      } else {
-        this.alert = error.error.errors;
-      }
-    });
+    if (attribute.length === 0) {
+      this.getAll();
+    } else {
+      this.employeeService.sortAllEmployeesByAttribute(attribute).subscribe(data => {
+        this.employees = data.employees;
+        this.alert = null;
+        if (this.employees.length === 0) {
+          this.alert = 'No entries found!';
+        }
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 0) {
+          this.alert = this.CONNECTION_UNAVAILABLE;
+        } else {
+          this.alert = error.error.errors;
+        }
+      });
+    }
   }
 
   filter(attribute: string) {
-    this.employeeService.getAllEmployeesYoungerThanAttribute(attribute).subscribe(data => {
+    if (attribute.length === 0) {
+      this.getAll();
+    } else {
+      this.employeeService.getAllEmployeesYoungerThanAttribute(attribute).subscribe(data => {
+        this.employees = data.employees;
+        this.alert = null;
+        if (this.employees.length === 0) {
+          this.alert = 'No entries found!';
+        }
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 0) {
+          this.alert = this.CONNECTION_UNAVAILABLE;
+        } else {
+          this.alert = error.error.errors;
+        }
+      });
+    }
+  }
+
+  getAll() {
+    this.employeeService.getAll().subscribe(data => {
       this.employees = data.employees;
       this.alert = null;
       if (this.employees.length === 0) {
@@ -58,7 +84,7 @@ export class EmployeeListComponent implements OnInit {
       }
     }, (error: HttpErrorResponse) => {
       if (error.status === 0) {
-        this.alert = 'unable to connect to the service. please try again later';
+        this.alert = this.CONNECTION_UNAVAILABLE;
       } else {
         this.alert = error.error.errors;
       }
