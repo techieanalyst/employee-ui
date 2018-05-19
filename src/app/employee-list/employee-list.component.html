@@ -1,0 +1,10 @@
+<mat-list>
+   <mat-list-item class="card-1" *ngFor="let employee of employees">
+      <mat-icon matListIcon>face</mat-icon>
+      <h4 matLine>{{employee.name}}</h4>
+      <p matLine> {{employee.age}} years old.</p>
+      <p matLine>Joined the company {{employee.company}} on {{employee.joindate}}</p>
+      <p matLine>Phone: {{employee.phone}}. Email: {{employee.email}}</p>
+      <p matLine>Earning: {{employee.salary}}</p>
+   </mat-list-item>
+</mat-list>
